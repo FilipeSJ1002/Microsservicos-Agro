@@ -1,0 +1,16 @@
+# Pastas compiladas do Maven
+target/
+*.jar
+*.war
+
+# Arquivos da IDE (IntelliJ, VS Code, Eclipse)
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# Arquivos do SO
+.DS_Store
+Thumbs.db
