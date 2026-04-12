@@ -1,0 +1,56 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "feed-cost",
+			"type": "shell",
+			"command": ".\\mvnw spring-boot:run",
+			"options": {
+				"cwd": "${workspaceFolder}\\feed-cost-service"
+			},
+			"presentation": {
+				"group": "bovexo-services",
+				"panel": "shared",
+				"clear": true
+			}
+		},
+		{
+			"label": "feed-management",
+			"type": "shell",
+			"command": ".\\mvnw spring-boot:run",
+			"options": {
+				"cwd": "${workspaceFolder}\\feed-management-service"
+			},
+			"presentation": {
+				"group": "bovexo-services",
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "nutrition-analysis",
+			"type": "shell",
+			"command": ".\\mvnw spring-boot:run",
+			"options": {
+				"cwd": "${workspaceFolder}\\nutrition-analysis-service"
+			},
+			"presentation": {
+				"group": "bovexo-services",
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Iniciar Todos os Microsservicos",
+			"dependsOn": [
+				"feed-cost",
+				"feed-management",
+				"nutrition-analysis"
+			],
+			"dependsOrder": "parallel",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

@@ -5,15 +5,17 @@ import com.bovexo.nutritionanalysisservice.dto.FeedEventDto;
 import com.bovexo.nutritionanalysisservice.model.NutritionAnalysis;
 import com.bovexo.nutritionanalysisservice.repository.NutritionAnalysisRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import java.math.BigDecimal;
-
 @Service
 public class NutritionAnalysisService {
 
   private final NutritionAnalysisRepository repository;
   private final RestTemplate restTemplate;
+
+  @Value("${feed.cost.service.url}")
+  private String feedCostServiceUrl;
 
   public NutritionAnalysisService(NutritionAnalysisRepository repository, RestTemplate restTemplate) {
     this.repository = repository;
@@ -22,11 +24,11 @@ public class NutritionAnalysisService {
 
   @RabbitListener(queues = "nutrition.analysis.queue")
   public void processFeedEvent(FeedEventDto event) {
-    String costApiUrl = "http://localhost:8081/cost/" + event.getFeedType();
+    String costApiUrl = feedCostServiceUrl + "/cost/" + event.getFeedType().name();
     FeedCostDto costDto = restTemplate.getForObject(costApiUrl, FeedCostDto.class);
 
     if (costDto != null && costDto.getCostPerKg() != null) {
-      BigDecimal totalCost = costDto.getCostPerKg().multiply(BigDecimal.valueOf(event.getQuantity()));
+      Long totalCost = Math.round(costDto.getCostPerKg() * event.getQuantity());
 
       NutritionAnalysis analysis = new NutritionAnalysis();
       analysis.setAnimalId(event.getAnimalId());

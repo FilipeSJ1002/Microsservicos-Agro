@@ -2,7 +2,6 @@ package com.bovexo.nutritionanalysisservice.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Document(collection = "nutrition_analysis")
@@ -10,10 +9,10 @@ public class NutritionAnalysis {
   @Id
   private String id;
   private String animalId;
-  private String feedType;
+  private com.bovexo.nutritionanalysisservice.dto.FeedType feedType;
   private Double quantity;
-  private BigDecimal costPerKg;
-  private BigDecimal totalCost;
+  private Long costPerKg;
+  private Long totalCost;
   private LocalDateTime analysisDate = LocalDateTime.now();
 
   public String getId() {
@@ -32,11 +31,11 @@ public class NutritionAnalysis {
     this.animalId = animalId;
   }
 
-  public String getFeedType() {
+  public com.bovexo.nutritionanalysisservice.dto.FeedType getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(String feedType) {
+  public void setFeedType(com.bovexo.nutritionanalysisservice.dto.FeedType feedType) {
     this.feedType = feedType;
   }
 
@@ -48,19 +47,19 @@ public class NutritionAnalysis {
     this.quantity = quantity;
   }
 
-  public BigDecimal getCostPerKg() {
+  public Long getCostPerKg() {
     return costPerKg;
   }
 
-  public void setCostPerKg(BigDecimal costPerKg) {
+  public void setCostPerKg(Long costPerKg) {
     this.costPerKg = costPerKg;
   }
 
-  public BigDecimal getTotalCost() {
+  public Long getTotalCost() {
     return totalCost;
   }
 
-  public void setTotalCost(BigDecimal totalCost) {
+  public void setTotalCost(Long totalCost) {
     this.totalCost = totalCost;
   }
 

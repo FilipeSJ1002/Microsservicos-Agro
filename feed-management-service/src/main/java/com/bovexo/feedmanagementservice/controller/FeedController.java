@@ -7,6 +7,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.bovexo.feedmanagementservice.dto.FeedRecordDto;
+import com.bovexo.feedmanagementservice.dto.FeedEventDto;
+import org.springframework.http.HttpStatus;
+import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
@@ -22,21 +26,50 @@ public class FeedController {
   }
 
   @PostMapping
-  public ResponseEntity<FeedRecord> createFeed(@RequestBody FeedRecord record) {
+  public ResponseEntity<FeedRecordDto> createFeed(@RequestBody FeedRecordDto dto) {
+    FeedRecord record = new FeedRecord();
+    record.setAnimalId(dto.getAnimalId());
+    record.setFeedType(dto.getFeedType());
+    record.setQuantity(dto.getQuantity());
+    if (dto.getRecordDate() != null) {
+      record.setDate(dto.getRecordDate());
+    }
+
     FeedRecord savedRecord = repository.save(record);
 
-    rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, savedRecord);
+    FeedEventDto eventDto = new FeedEventDto();
+    eventDto.setAnimalId(savedRecord.getAnimalId());
+    eventDto.setFeedType(savedRecord.getFeedType());
+    eventDto.setQuantity(savedRecord.getQuantity());
 
-    return ResponseEntity.ok(savedRecord);
+    rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, eventDto);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(toDto(savedRecord));
   }
 
   @GetMapping
-  public ResponseEntity<List<FeedRecord>> getAllFeeds() {
-    return ResponseEntity.ok(repository.findAll());
+  public ResponseEntity<List<FeedRecordDto>> getAllFeeds() {
+    List<FeedRecordDto> dtos = repository.findAll().stream()
+        .map(this::toDto)
+        .collect(Collectors.toList());
+    return ResponseEntity.ok(dtos);
   }
 
   @GetMapping("/{animalId}")
-  public ResponseEntity<List<FeedRecord>> getFeedsByAnimal(@PathVariable String animalId) {
-    return ResponseEntity.ok(repository.findByAnimalId(animalId));
+  public ResponseEntity<List<FeedRecordDto>> getFeedsByAnimal(@PathVariable String animalId) {
+    List<FeedRecordDto> dtos = repository.findByAnimalId(animalId).stream()
+        .map(this::toDto)
+        .collect(Collectors.toList());
+    return ResponseEntity.ok(dtos);
+  }
+
+  private FeedRecordDto toDto(FeedRecord record) {
+    FeedRecordDto dto = new FeedRecordDto();
+    dto.setId(record.getId());
+    dto.setAnimalId(record.getAnimalId());
+    dto.setFeedType(record.getFeedType());
+    dto.setQuantity(record.getQuantity());
+    dto.setRecordDate(record.getDate());
+    return dto;
   }
 }

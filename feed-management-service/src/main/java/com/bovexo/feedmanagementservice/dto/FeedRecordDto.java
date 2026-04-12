@@ -1,27 +1,14 @@
-package com.bovexo.feedmanagementservice.model;
+package com.bovexo.feedmanagementservice.dto;
 
-import jakarta.persistence.*;
+import com.bovexo.feedmanagementservice.model.FeedType;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "feed_record")
-public class FeedRecord {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FeedRecordDto {
   private Long id;
-
-  @Column(name = "animal_id")
   private String animalId;
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "feed_type")
   private FeedType feedType;
-
   private Double quantity;
-
-  @Column(name = "created_at")
-  private LocalDateTime date = LocalDateTime.now();
+  private LocalDateTime recordDate;
 
   public Long getId() {
     return id;
@@ -55,11 +42,11 @@ public class FeedRecord {
     this.quantity = quantity;
   }
 
-  public LocalDateTime getDate() {
-    return date;
+  public LocalDateTime getRecordDate() {
+    return recordDate;
   }
 
-  public void setDate(LocalDateTime date) {
-    this.date = date;
+  public void setRecordDate(LocalDateTime recordDate) {
+    this.recordDate = recordDate;
   }
 }

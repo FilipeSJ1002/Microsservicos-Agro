@@ -5,7 +5,8 @@ target/
 
 # Arquivos da IDE (IntelliJ, VS Code, Eclipse)
 .idea/
-.vscode/
+.vscode/*
+!.vscode/tasks.json
 *.iml
 .project
 .classpath
@@ -14,3 +15,6 @@ target/
 # Arquivos do SO
 .DS_Store
 Thumbs.db
+
+# Arquivos de Variaveis de Ambiente
+**/.env

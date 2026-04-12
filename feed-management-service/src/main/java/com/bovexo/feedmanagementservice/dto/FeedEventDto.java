@@ -1,4 +1,6 @@
-package com.bovexo.nutritionanalysisservice.dto;
+package com.bovexo.feedmanagementservice.dto;
+
+import com.bovexo.feedmanagementservice.model.FeedType;
 
 public class FeedEventDto {
   private String animalId;

@@ -1,16 +1,22 @@
 package com.bovexo.nutritionanalysisservice.dto;
 
-import java.math.BigDecimal;
-
 public class FeedCostDto {
-  private String feedType;
-  private BigDecimal costPerKg;
+  private com.bovexo.nutritionanalysisservice.dto.FeedType feedType;
+  private Long costPerKg;
 
-  public BigDecimal getCostPerKg() {
+  public Long getCostPerKg() {
     return costPerKg;
   }
 
-  public String getFeedType() {
+  public void setCostPerKg(Long costPerKg) {
+    this.costPerKg = costPerKg;
+  }
+
+  public com.bovexo.nutritionanalysisservice.dto.FeedType getFeedType() {
     return feedType;
+  }
+
+  public void setFeedType(com.bovexo.nutritionanalysisservice.dto.FeedType feedType) {
+    this.feedType = feedType;
   }
 }
