@@ -184,7 +184,7 @@ Recomendo o uso do **DBeaver** para visualizar os bancos relacionais em uma úni
 * **Banco de dados (Database):** `postgres`
 * **Usuário:** O valor definido em `DB_USERNAME` no seu arquivo `.env` de cada microsserviço (ex: `postgres`)
 * **Senha:** O valor definido em `DB_PASSWORD` no seu arquivo `.env` de cada microsserviço (ex: `admin`)
-* **⚠️ Importante:** Na tela principal de conexão do DBeaver, **marque a opção "Exibir todos os bancos de dados"** (Show all databases).
+* **Importante:** Na tela principal de conexão do DBeaver, **marque a opção "Exibir todos os bancos de dados"** (Show all databases).
 
 Após conectar, expanda a conexão para acessar os microsserviços separadamente:
 * Navegue até `bovexo_management > Schemas > public > Tables` para visualizar os `users` cadastrados e os `feeds` (registros de alimentação).
