@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import java.util.stream.Collectors;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/feeds")
 public class FeedController {

@@ -1,0 +1,196 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My first collection
+meta:
+  id: wrk_a6303f3eadb8481cbce45d563bfd05ff
+  created: 1775795436476
+  modified: 1775795436476
+  description: ""
+collection:
+  - url: http://localhost:8082/feeds
+    name: feed-management
+    meta:
+      id: req_5f2376ae8f724ff19c5b0a25593a1f90
+      created: 1775795436491
+      modified: 1776046238388
+      isPrivate: false
+      description: ""
+      sortKey: -1775795436491
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "animalId": "1",
+          "feedType": "TRIGO",
+          "quantity": 2000
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aXNpdGFudGUiLCJpYXQiOjE3NzYwNDQ5NjAsImV4cCI6MTc3NjEzMTM2MH0.5jz-vm8EgW7yizbLk0yQFKPVH37cdtqtGWTqdvnMymA
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8083/analysis
+    name: nutrition-analysis
+    meta:
+      id: req_97e8d15cf2344a908a304e825368b87d
+      created: 1775796668317
+      modified: 1775978049907
+      isPrivate: false
+      description: ""
+      sortKey: -1775796668317
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8082/feeds
+    name: nutrition-feeds
+    meta:
+      id: req_600736aee9cf4cf3986e2a2da5513729
+      created: 1775977428997
+      modified: 1775977704005
+      isPrivate: false
+      description: ""
+      sortKey: -1775796052404
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8082/feeds/1234
+    name: nutrition-feeds-animal
+    meta:
+      id: req_3019ac0f10a247bda5054717bc610ad2
+      created: 1775977729560
+      modified: 1776031081857
+      isPrivate: false
+      description: ""
+      sortKey: -1775795744447.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8081/cost/MILHO
+    name: nutrition-cost
+    meta:
+      id: req_3c7b5aff2ba748d0932d69dc4065a3f4
+      created: 1775977750568
+      modified: 1776027902302
+      isPrivate: false
+      description: ""
+      sortKey: -1775795590469.25
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8083/analysis/1234
+    name: nutrition-analysis-animal
+    meta:
+      id: req_06ce18d6c4bf4683ba46d1f6359b616d
+      created: 1775978034085
+      modified: 1776028991202
+      isPrivate: false
+      description: ""
+      sortKey: -1775796360360.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8082/auth/guest
+    name: Login
+    meta:
+      id: req_f9df875ed1cb4a0a99a0d31625197789
+      created: 1776044928307
+      modified: 1776044944212
+      isPrivate: false
+      description: ""
+      sortKey: -1776044928307
+    method: POST
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_b522864edd0dd9af9a51e6e57100608da0205c92
+    created: 1775795436481
+    modified: 1775795436481
+environments:
+  name: Base Environment
+  meta:
+    id: env_b522864edd0dd9af9a51e6e57100608da0205c92
+    created: 1775795436479
+    modified: 1775795436479
+    isPrivate: false

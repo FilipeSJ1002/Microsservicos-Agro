@@ -6,6 +6,7 @@ import com.bovexo.feedcostservice.repository.FeedCostRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/cost")
 public class FeedCostController {
