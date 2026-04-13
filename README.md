@@ -169,3 +169,45 @@ Exemplo de Resposta:
 	}
 ]
 ```
+
+## Acessando os Bancos de Dados Localmente
+
+Para validar a persistência dos dados, o comportamento da segurança (Data Seeding do usuário visitante) e a trava de Idempotência, você pode se conectar aos bancos de dados que estão rodando no Docker utilizando ferramentas visuais.
+
+### 1. PostgreSQL (Usuários, Históricos e Custos)
+Recomendo o uso do **DBeaver** para visualizar os bancos relacionais em uma única conexão.
+
+**Configuração da Conexão:**
+* **Tipo:** PostgreSQL
+* **Host:** `localhost`
+* **Porta:** `5433` *(A porta 5432 do container foi mapeada para a 5433 no Host para evitar conflitos locais)*
+* **Banco de dados (Database):** `postgres`
+* **Usuário:** O valor definido em `DB_USERNAME` no seu arquivo `.env` de cada microsserviço (ex: `postgres`)
+* **Senha:** O valor definido em `DB_PASSWORD` no seu arquivo `.env` de cada microsserviço (ex: `admin`)
+* **⚠️ Importante:** Na tela principal de conexão do DBeaver, **marque a opção "Exibir todos os bancos de dados"** (Show all databases).
+
+Após conectar, expanda a conexão para acessar os microsserviços separadamente:
+* Navegue até `bovexo_management > Schemas > public > Tables` para visualizar os `users` cadastrados e os `feeds` (registros de alimentação).
+* Navegue até `bovexo_cost > Schemas > public > Tables` para visualizar a tabela de preços do milho, soja, etc.
+
+### 2. MongoDB (Análises e Idempotência)
+Recomendo o uso do **MongoDB Compass** para visualizar as coleções NoSQL.
+
+**Configuração da Conexão:**
+1. Abra o MongoDB Compass.
+2. Na tela de nova conexão, cole a seguinte URI:
+   ```text
+   mongodb://localhost:27017/
+	 ```
+3. Ainda na tela de nova conexão, cole o seguinte Name:
+   ```text
+   bovexo_nutrition
+	 ```
+4. Clique em Connect.
+
+**Onde encontrar os dados:**
+O Spring Boot, por padrão, utiliza o banco de dados chamado test. Expanda-o para visualizar as coleções:
+
+* `nutrition_analysis`: Contém os resultados finais dos cálculos nutricionais e custos por animal.
+
+* `processed_events`: Esta é a camada de Resiliência e Idempotência. Ela armazena os IDs únicos das mensagens processadas vindas do RabbitMQ, garantindo que o mesmo evento de alimentação não seja contabilizado mais de uma vez em caso de reprocessamento na fila.

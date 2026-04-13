@@ -4,9 +4,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import io.swagger.v3.oas.annotations.Hidden;
 
 import java.util.Map;
 
+@Hidden
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
