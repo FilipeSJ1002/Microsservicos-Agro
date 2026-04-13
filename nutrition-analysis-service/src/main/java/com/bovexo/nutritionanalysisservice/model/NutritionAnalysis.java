@@ -3,13 +3,15 @@ package com.bovexo.nutritionanalysisservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "nutrition_analysis")
 public class NutritionAnalysis {
   @Id
   private String id;
   private String animalId;
-  private com.bovexo.nutritionanalysisservice.dto.FeedType feedType;
+  private FeedType feedType;
   private Double quantity;
   private Long costPerKg;
   private Long totalCost;
@@ -31,11 +33,11 @@ public class NutritionAnalysis {
     this.animalId = animalId;
   }
 
-  public com.bovexo.nutritionanalysisservice.dto.FeedType getFeedType() {
+  public FeedType getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(com.bovexo.nutritionanalysisservice.dto.FeedType feedType) {
+  public void setFeedType(FeedType feedType) {
     this.feedType = feedType;
   }
 
@@ -47,16 +49,28 @@ public class NutritionAnalysis {
     this.quantity = quantity;
   }
 
+  @JsonIgnore
   public Long getCostPerKg() {
     return costPerKg;
+  }
+
+  @JsonProperty("costPerKg")
+  public Double getCostPerKgReais() {
+    return costPerKg != null ? costPerKg / 100.0 : null;
   }
 
   public void setCostPerKg(Long costPerKg) {
     this.costPerKg = costPerKg;
   }
 
+  @JsonIgnore
   public Long getTotalCost() {
     return totalCost;
+  }
+
+  @JsonProperty("totalCost")
+  public Double getTotalCostReais() {
+    return totalCost != null ? totalCost / 100.0 : null;
   }
 
   public void setTotalCost(Long totalCost) {

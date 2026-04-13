@@ -1,4 +1,4 @@
-package com.bovexo.nutritionanalysisservice.dto;
+package com.bovexo.nutritionanalysisservice.model;
 
 public enum FeedType {
     MILHO,

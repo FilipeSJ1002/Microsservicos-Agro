@@ -1,9 +1,20 @@
 package com.bovexo.nutritionanalysisservice.dto;
+import com.bovexo.nutritionanalysisservice.model.FeedType;
 
 public class FeedEventDto {
+  
+  private Long id; 
   private String animalId;
   private FeedType feedType;
   private Double quantity;
+
+  public Long getId() { 
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public String getAnimalId() {
     return animalId;

@@ -4,6 +4,7 @@ import com.bovexo.nutritionanalysisservice.dto.FeedCostDto;
 import com.bovexo.nutritionanalysisservice.dto.FeedEventDto;
 import com.bovexo.nutritionanalysisservice.model.NutritionAnalysis;
 import com.bovexo.nutritionanalysisservice.repository.NutritionAnalysisRepository;
+import com.bovexo.nutritionanalysisservice.model.FeedType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -32,7 +33,7 @@ class NutritionAnalysisServiceTest {
   void shouldCalculateAndSaveTotalCostCorrectly() {
     FeedEventDto eventDto = new FeedEventDto();
     ReflectionTestUtils.setField(eventDto, "animalId", "123");
-    ReflectionTestUtils.setField(eventDto, "feedType", com.bovexo.nutritionanalysisservice.dto.FeedType.MILHO);
+    ReflectionTestUtils.setField(eventDto, "feedType", FeedType.MILHO);
     ReflectionTestUtils.setField(eventDto, "quantity", 10.0);
     
     ReflectionTestUtils.setField(service, "feedCostServiceUrl", "http://localhost:8081");
@@ -52,6 +53,6 @@ class NutritionAnalysisServiceTest {
 
     assertEquals(2500L, savedAnalysis.getTotalCost().longValue());
     assertEquals("123", savedAnalysis.getAnimalId());
-    assertEquals(com.bovexo.nutritionanalysisservice.dto.FeedType.MILHO, savedAnalysis.getFeedType());
+    assertEquals(FeedType.MILHO, savedAnalysis.getFeedType());
   }
 }

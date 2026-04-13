@@ -1,5 +1,6 @@
 package com.bovexo.nutritionanalysisservice.controller;
 
+import com.bovexo.nutritionanalysisservice.exception.ResourceNotFoundException;
 import com.bovexo.nutritionanalysisservice.model.NutritionAnalysis;
 import com.bovexo.nutritionanalysisservice.repository.NutritionAnalysisRepository;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,10 @@ public class NutritionController {
 
   @GetMapping("/{animalId}")
   public ResponseEntity<List<NutritionAnalysis>> getByAnimal(@PathVariable String animalId) {
-    return ResponseEntity.ok(repository.findByAnimalId(animalId));
+    List<NutritionAnalysis> analyses = repository.findByAnimalId(animalId);
+    if (analyses.isEmpty()) {
+      throw new ResourceNotFoundException("Nenhuma análise encontrada para o animal ID: " + animalId);
+    }
+    return ResponseEntity.ok(analyses);
   }
 }

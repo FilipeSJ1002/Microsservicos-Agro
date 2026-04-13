@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bovexo.feedmanagementservice.dto.FeedRecordDto;
+import com.bovexo.feedmanagementservice.exception.ResourceNotFoundException;
 import com.bovexo.feedmanagementservice.dto.FeedEventDto;
 import org.springframework.http.HttpStatus;
 import java.util.stream.Collectors;
@@ -38,6 +39,7 @@ public class FeedController {
     FeedRecord savedRecord = repository.save(record);
 
     FeedEventDto eventDto = new FeedEventDto();
+    eventDto.setId(savedRecord.getId());
     eventDto.setAnimalId(savedRecord.getAnimalId());
     eventDto.setFeedType(savedRecord.getFeedType());
     eventDto.setQuantity(savedRecord.getQuantity());
@@ -57,9 +59,16 @@ public class FeedController {
 
   @GetMapping("/{animalId}")
   public ResponseEntity<List<FeedRecordDto>> getFeedsByAnimal(@PathVariable String animalId) {
-    List<FeedRecordDto> dtos = repository.findByAnimalId(animalId).stream()
-        .map(this::toDto)
-        .collect(Collectors.toList());
+    List<FeedRecord> records = repository.findByAnimalId(animalId);
+    
+    if (records.isEmpty()) {
+      throw new ResourceNotFoundException("Nenhum registro de alimentação encontrado para o animal ID: " + animalId);
+    }
+
+    List<FeedRecordDto> dtos = records.stream()
+      .map(this::toDto)
+      .collect(Collectors.toList());
+        
     return ResponseEntity.ok(dtos);
   }
 

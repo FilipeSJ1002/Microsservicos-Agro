@@ -3,9 +3,19 @@ package com.bovexo.feedmanagementservice.dto;
 import com.bovexo.feedmanagementservice.model.FeedType;
 
 public class FeedEventDto {
+  
+  private Long id; 
   private String animalId;
   private FeedType feedType;
   private Double quantity;
+
+  public Long getId() { 
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public String getAnimalId() {
     return animalId;

@@ -45,13 +45,23 @@ Abra as 3 pastas dos microsserviços em terminais separados e execute em cada um
 
 ## Documentação Interativa (Swagger)
 
-As documentações de contrato das rotas podem ser lidas e testadas diretamente via Swagger pelas seguintes URLs em seu navegador após a inicialização:
+A documentação dos contratos das rotas pode ser lida e testada diretamente via Swagger acessando as seguintes URLs em seu navegador após a inicialização:
 
-> ⚠️ **Aviso Importante:** As URLs abaixo assumem as portas padrão (`8081`, `8082`, `8083`). Caso você tenha modificado essas portas através dos seus arquivos `.env`, lembre-se de substituir o número da porta nos links abaixo pela numeração correspondente.
+> **Aviso Importante:** As URLs abaixo assumem as portas padrão (`8081`, `8082`, `8083`). Caso você tenha modificado essas portas através dos seus arquivos `.env`, lembre-se de substituir o número da porta nos links abaixo pela numeração correspondente.
 
 - Feed Cost Service: http://localhost:8081/swagger-ui/index.html
 - Feed Management Service: http://localhost:8082/swagger-ui/index.html
 - Nutrition Analysis Service: http://localhost:8083/swagger-ui/index.html
+
+## Arquitetura e Resiliência
+
+Este projeto implementa padrões de mercado para sistemas distribuídos:
+
+* **Idempotência no Consumo de Mensagens:** O `nutrition-analysis-service` possui uma trava de segurança utilizando uma collection auxiliar (`processed_events`) no MongoDB. Se o RabbitMQ duplicar a entrega de uma mensagem devido a instabilidades na rede, o sistema reconhece o ID do evento e ignora o processamento duplicado.
+* **Resiliência entre Serviços:** As chamadas síncronas feitas via `RestTemplate` estão blindadas. Se o serviço de custos estiver fora do ar ou retornar *Not Found* (404), a falha é interceptada de forma graciosa para evitar loops infinitos de reprocessamento (Dead Letters) no RabbitMQ.
+* **Tratamento Global de Exceções (`@ControllerAdvice`):** Todos os microsserviços possuem interceptadores globais de erro. Consultas a recursos inexistentes ou envios de JSON mal formatados (ex: Enums inválidos) não quebram a aplicação nem vazam *Stack Traces*, retornando sempre um JSON amigável e padronizado (Status 400 ou 404).
+* **Prevenção de Floating Point Math:** Os valores financeiros (como o custo por Kg) são salvos em formato numérico inteiro (`Long` em centavos) nos bancos de dados (PostgreSQL e MongoDB) para evitar problemas de arredondamento. O `Double` só é formatado na camada de apresentação (DTO/Serialization) no momento em que a API devolve o JSON.
+
 
 ## Endpoints e Testes no Insomnia
 
@@ -93,15 +103,15 @@ Lista os registros de um animal específico (ex: `/feeds/123`).
 Retorna a tabela de custos de insumos por Kg.
 
 **GET http://localhost:8081/cost/{feedType}**
-Restorna o custo de um tipo de alimentação específica (ex: `/cost/MILHO`).
+Retorna o custo de um tipo de alimentação específica (ex: `/cost/MILHO`).
 - Exemplo de Resposta:
 ```json
 {
   "feedType": "MILHO",
-  "costPerKg": 250
+  "costPerKg": 2.50
 }
 ```
-*(Nota: Valores financeiros na plataforma são armazenados sem ponto flutuante, correspondendo a centavos. Portanto, 250 equivale a R$ 2,50 por Kg do insumo).*
+*(Nota: Valores financeiros na plataforma são armazenados no Banco de Dados em centavos para evitar problemas de arredondamento com ponto flutuante. No entanto, no retorno da API, eles são convertidos automaticamente para Reais para facilitar a visualização).*
 
 ### 3. Nutrition Analysis Service (Porta 8083)
 
@@ -118,11 +128,11 @@ Consulta os históricos calculados de um único animal.
 	{
 		"analysisDate": "2026-04-12T04:18:35.015",
 		"animalId": "12345",
-		"costPerKg": 250,
+		"costPerKg": 2.50,
 		"feedType": "MILHO",
 		"id": "69db474b8088712033224840",
 		"quantity": 10.5,
-		"totalCost": 2625
+		"totalCost": 26.25
 	}
 ]
 ```

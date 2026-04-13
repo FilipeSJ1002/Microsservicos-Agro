@@ -1,6 +1,7 @@
 package com.bovexo.feedcostservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 public class FeedCost {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonIgnore
   private Long id;
 
@@ -35,8 +37,14 @@ public class FeedCost {
     this.feedType = feedType;
   }
 
+  @JsonIgnore
   public Long getCostPerKg() {
     return costPerKg;
+  }
+
+  @JsonProperty("costPerKg")
+  public Double getCostPerKgReais() {
+    return costPerKg != null ? costPerKg / 100.0 : null;
   }
 
   public void setCostPerKg(Long costPerKg) {
