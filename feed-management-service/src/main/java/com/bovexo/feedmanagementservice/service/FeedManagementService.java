@@ -15,9 +15,10 @@ public class FeedManagementService implements IFeedManagementService {
 
   private final RabbitTemplate rabbitTemplate;
   private final FeedRecordRepository repository;
-  private final ModelMapper modelMapper;  
+  private final ModelMapper modelMapper;
 
-  public FeedManagementService(RabbitTemplate rabbitTemplate, FeedRecordRepository repository, ModelMapper modelMapper) {
+  public FeedManagementService(RabbitTemplate rabbitTemplate, FeedRecordRepository repository,
+      ModelMapper modelMapper) {
     this.rabbitTemplate = rabbitTemplate;
     this.repository = repository;
     this.modelMapper = modelMapper;
@@ -52,7 +53,7 @@ public class FeedManagementService implements IFeedManagementService {
     postFeedEvent(savedRecord);
 
     FeedRecordDto responseDto = modelMapper.map(savedRecord, FeedRecordDto.class);
-    
+
     return responseDto;
   }
 }
