@@ -2,9 +2,13 @@ package com.bovexo.nutritionanalysisservice.externalApi;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import com.bovexo.nutritionanalysisservice.dto.FeedCostDto;
 
@@ -20,13 +24,25 @@ public class FeedCostApiService {
     this.restTemplate = restTemplate;
   }
 
-  public FeedCostDto getCost(String feedType) {
+  public FeedCostDto getCost(String feedType, String token) {
     String costApiUrl = feedCostServiceUrl + "/cost/" + feedType;
     FeedCostDto costDto = null;
 
     try {
-      costDto = restTemplate.getForObject(costApiUrl, FeedCostDto.class);
-    } catch (HttpClientErrorException.NotFound e) {
+      HttpHeaders headers = new HttpHeaders();
+      headers.set("Authorization", "Bearer " + token);
+
+      HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+      ResponseEntity<FeedCostDto> response = restTemplate.exchange(
+          costApiUrl,
+          HttpMethod.GET,
+          requestEntity,
+          FeedCostDto.class);
+
+      costDto = response.getBody();
+
+    } catch (NotFound e) {
       System.err.println("[ERRO] Insumo não cadastrado no serviço de custos: " + feedType);
       throw e;
     } catch (RestClientException e) {
