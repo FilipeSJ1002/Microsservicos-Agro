@@ -2,17 +2,17 @@ type: collection.insomnia.rest/5.0
 schema_version: "5.1"
 name: My first collection
 meta:
-  id: wrk_a6303f3eadb8481cbce45d563bfd05ff
-  created: 1775795436476
-  modified: 1775795436476
+  id: wrk_085681874b154bcbb59f5e9f5564940d
+  created: 1776084719789
+  modified: 1776084719789
   description: ""
 collection:
   - url: http://localhost:8082/feeds
     name: feed-management
     meta:
-      id: req_5f2376ae8f724ff19c5b0a25593a1f90
+      id: req_35d8a35696ef4450987669fa2ac29e8d
       created: 1775795436491
-      modified: 1776046238388
+      modified: 1776140580729
       isPrivate: false
       description: ""
       sortKey: -1775795436491
@@ -21,9 +21,9 @@ collection:
       mimeType: application/json
       text: |-
         {
-          "animalId": "1",
-          "feedType": "TRIGO",
-          "quantity": 2000
+          "animalId": "123",
+          "feedType": "SUPLEMENTO_MINERAL",
+          "quantity": 12
         }
     headers:
       - name: Content-Type
@@ -34,7 +34,7 @@ collection:
         disabled: false
     authentication:
       type: bearer
-      token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aXNpdGFudGUiLCJpYXQiOjE3NzYwNDQ5NjAsImV4cCI6MTc3NjEzMTM2MH0.5jz-vm8EgW7yizbLk0yQFKPVH37cdtqtGWTqdvnMymA
+      token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNzc2MTI1NjEzLCJleHAiOjE3NzYyMTIwMTN9.wBQ0CzFV4p-gYXlASIKOsr8UYKjidmQllvyp-Fp_dLQ
     settings:
       renderRequestBody: true
       encodeUrl: true
@@ -46,7 +46,7 @@ collection:
   - url: http://localhost:8083/analysis
     name: nutrition-analysis
     meta:
-      id: req_97e8d15cf2344a908a304e825368b87d
+      id: req_b158043aeaf845709ef150bbe1019323
       created: 1775796668317
       modified: 1775978049907
       isPrivate: false
@@ -69,7 +69,7 @@ collection:
   - url: http://localhost:8082/feeds
     name: nutrition-feeds
     meta:
-      id: req_600736aee9cf4cf3986e2a2da5513729
+      id: req_315b1f7e29944f029772043717983d73
       created: 1775977428997
       modified: 1775977704005
       isPrivate: false
@@ -89,12 +89,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8082/feeds/1234
+  - url: http://localhost:8082/feeds/123
     name: nutrition-feeds-animal
     meta:
-      id: req_3019ac0f10a247bda5054717bc610ad2
+      id: req_667ba37f63444d1db5df7340039e2398
       created: 1775977729560
-      modified: 1776031081857
+      modified: 1776140476523
       isPrivate: false
       description: ""
       sortKey: -1775795744447.5
@@ -112,12 +112,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8081/cost/MILHO
+  - url: http://127.0.0.1:8081/cost/SOJA
     name: nutrition-cost
     meta:
-      id: req_3c7b5aff2ba748d0932d69dc4065a3f4
+      id: req_95c429c6850a44db90878bd1efeb592f
       created: 1775977750568
-      modified: 1776027902302
+      modified: 1776139424652
       isPrivate: false
       description: ""
       sortKey: -1775795590469.25
@@ -135,12 +135,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8083/analysis/1234
+  - url: http://localhost:8083/analysis/123
     name: nutrition-analysis-animal
     meta:
-      id: req_06ce18d6c4bf4683ba46d1f6359b616d
+      id: req_0ee3cfe2b1a94cbca599856def0725c9
       created: 1775978034085
-      modified: 1776028991202
+      modified: 1776122974494
       isPrivate: false
       description: ""
       sortKey: -1775796360360.5
@@ -158,17 +158,26 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8082/auth/guest
+  - url: http://localhost:8084/auth/login
     name: Login
     meta:
-      id: req_f9df875ed1cb4a0a99a0d31625197789
-      created: 1776044928307
-      modified: 1776044944212
+      id: req_f5cc30a52cad49669b176aab464a8f17
+      created: 1776111391866
+      modified: 1776136419159
       isPrivate: false
       description: ""
-      sortKey: -1776044928307
+      sortKey: -1776111391866
     method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "username": "admin",
+          "password": "admin123"
+        }
     headers:
+      - name: Content-Type
+        value: application/json
       - name: User-Agent
         value: insomnia/12.5.0
         description: ""
@@ -184,13 +193,13 @@ collection:
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_b522864edd0dd9af9a51e6e57100608da0205c92
+    id: jar_39ebb6a8b49b48c7b5928d08cea40ae2
     created: 1775795436481
     modified: 1775795436481
 environments:
   name: Base Environment
   meta:
-    id: env_b522864edd0dd9af9a51e6e57100608da0205c92
+    id: env_9d3410732f3c4937985e86d3f8efb4ce
     created: 1775795436479
     modified: 1775795436479
     isPrivate: false
