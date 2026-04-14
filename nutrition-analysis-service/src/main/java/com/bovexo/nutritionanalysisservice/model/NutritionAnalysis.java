@@ -11,7 +11,7 @@ public class NutritionAnalysis {
   @Id
   private String id;
   private String animalId;
-  private FeedType feedType;
+  private FeedTypeEnum feedType;
   private Double quantity;
   private Long costPerKg;
   private Long totalCost;
@@ -33,11 +33,11 @@ public class NutritionAnalysis {
     this.animalId = animalId;
   }
 
-  public FeedType getFeedType() {
+  public FeedTypeEnum getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(FeedType feedType) {
+  public void setFeedType(FeedTypeEnum feedType) {
     this.feedType = feedType;
   }
 

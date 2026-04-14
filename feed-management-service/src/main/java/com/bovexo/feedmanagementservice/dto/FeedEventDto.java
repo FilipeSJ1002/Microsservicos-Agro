@@ -1,12 +1,12 @@
 package com.bovexo.feedmanagementservice.dto;
 
-import com.bovexo.feedmanagementservice.model.FeedType;
+import com.bovexo.feedmanagementservice.model.FeedTypeEnum;
 
 public class FeedEventDto {
   
   private Long id; 
   private String animalId;
-  private FeedType feedType;
+  private FeedTypeEnum feedType;
   private Double quantity;
 
   public Long getId() { 
@@ -25,11 +25,11 @@ public class FeedEventDto {
     this.animalId = animalId;
   }
 
-  public FeedType getFeedType() {
+  public FeedTypeEnum getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(FeedType feedType) {
+  public void setFeedType(FeedTypeEnum feedType) {
     this.feedType = feedType;
   }
 

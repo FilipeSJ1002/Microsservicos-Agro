@@ -1,13 +1,24 @@
 package com.bovexo.feedmanagementservice.dto;
 
-import com.bovexo.feedmanagementservice.model.FeedType;
+import com.bovexo.feedmanagementservice.model.FeedTypeEnum;
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 public class FeedRecordDto {
+
   private Long id;
+
+  @NotBlank(message = "animalId é obrigatório")
   private String animalId;
-  private FeedType feedType;
+
+  @NotNull(message = "FeedType é obrigatório")
+  private FeedTypeEnum feedType;
+
+  @NotNull(message = "Quantidade é obrigatória")
+  @Positive(message = "Quantidade deve ser maior que zero")
+  @DecimalMax(value = "1000.0", message = "Quantidade não pode ser maior que 1000")
   private Double quantity;
+
   private LocalDateTime recordDate;
 
   public Long getId() {
@@ -26,11 +37,11 @@ public class FeedRecordDto {
     this.animalId = animalId;
   }
 
-  public FeedType getFeedType() {
+  public FeedTypeEnum getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(FeedType feedType) {
+  public void setFeedType(FeedTypeEnum feedType) {
     this.feedType = feedType;
   }
 

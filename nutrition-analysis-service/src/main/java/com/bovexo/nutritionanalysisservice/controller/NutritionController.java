@@ -1,10 +1,12 @@
 package com.bovexo.nutritionanalysisservice.controller;
 
-import com.bovexo.nutritionanalysisservice.exception.ResourceNotFoundException;
+import com.bovexo.nutritionanalysisservice.dto.NutritionAnalysisDto;
 import com.bovexo.nutritionanalysisservice.model.NutritionAnalysis;
 import com.bovexo.nutritionanalysisservice.repository.NutritionAnalysisRepository;
+import com.bovexo.nutritionanalysisservice.service.NutritionAnalysisService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -13,9 +15,11 @@ import java.util.List;
 public class NutritionController {
 
   private final NutritionAnalysisRepository repository;
+  private final NutritionAnalysisService nutritionAnalysisService;
 
-  public NutritionController(NutritionAnalysisRepository repository) {
+  public NutritionController(NutritionAnalysisRepository repository, NutritionAnalysisService nutritionAnalysisService) {
     this.repository = repository;
+    this.nutritionAnalysisService = nutritionAnalysisService;
   }
 
   @GetMapping
@@ -24,11 +28,8 @@ public class NutritionController {
   }
 
   @GetMapping("/{animalId}")
-  public ResponseEntity<List<NutritionAnalysis>> getByAnimal(@PathVariable String animalId) {
-    List<NutritionAnalysis> analyses = repository.findByAnimalId(animalId);
-    if (analyses.isEmpty()) {
-      throw new ResourceNotFoundException("Nenhuma análise encontrada para o animal ID: " + animalId);
-    }
-    return ResponseEntity.ok(analyses);
+  public ResponseEntity<List<NutritionAnalysisDto>> getByAnimal(@PathVariable String animalId) {
+    List<NutritionAnalysisDto> nutritionAnalysesDto = nutritionAnalysisService.validateAnimalId(animalId);
+    return ResponseEntity.ok(nutritionAnalysesDto);
   }
 }

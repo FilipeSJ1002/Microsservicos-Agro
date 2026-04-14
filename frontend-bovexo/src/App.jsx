@@ -2,6 +2,19 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Activity, DollarSign, Send, Search, CheckCircle, Tag, LogIn, UserPlus, LogOut, User } from 'lucide-react'
 
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('@BovExo:token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 const TIPOS_ALIMENTO = [
   "MILHO", "SOJA", "FARELO_SOJA", "SORGO", "TRIGO",
   "SUPLEMENTO_MINERAL", "NUCLEO_PROTEICO", "SAL_BRANCO", "UREIA", "SILAGEM_MILHO"
@@ -28,27 +41,30 @@ function App() {
     setAuthError(''); setAuthSuccess('');
 
     try {
-      const endpoint = isLoginMode ? 'http://localhost:8082/auth/login' : 'http://localhost:8082/auth/register';
+      const endpoint = isLoginMode ? 'http://localhost:8084/auth/login' : 'http://localhost:8084/auth/register';
       const response = await axios.post(endpoint, authForm);
 
       if (isLoginMode) {
-        loginNoSistema(response.data.token, response.data.username);
+        loginNoSistema(response.data.accessToken, authForm.username);
       } else {
         setAuthSuccess('Conta criada! Faça login para entrar.');
         setIsLoginMode(true);
         setAuthForm({ username: '', password: '' });
       }
     } catch (error) {
-      setAuthError(error.response?.data?.erro || 'Erro de conexão com o servidor.');
+      setAuthError(error.response?.data?.message || 'Erro de conexão com o servidor.');
     }
   };
 
   const handleGuestLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8082/auth/guest');
-      loginNoSistema(response.data.token, response.data.username);
+      const response = await axios.post('http://localhost:8084/auth/login', {
+        username: 'guest',
+        password: 'guest123'
+      });
+      loginNoSistema(response.data.accessToken, 'guest');
     } catch (error) {
-      setAuthError('Servidor de autenticação offline.');
+      setAuthError('Servidor de autenticação offline ou credenciais inválidas.');
     }
   };
 
@@ -64,9 +80,8 @@ function App() {
     localStorage.removeItem('@BovExo:user');
     setToken(null);
     setLoggedUser(null);
-    setResultadoAnalise(null); 
+    setResultadoAnalise(null);
   };
-
 
   const registrarConsumo = async (e) => {
     e.preventDefault();
@@ -75,8 +90,6 @@ function App() {
         animalId: animalIdForm,
         feedType: feedTypeForm,
         quantity: parseFloat(quantityForm)
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
       setStatusEnvio('sucesso');
       setTimeout(() => setStatusEnvio(null), 3000);

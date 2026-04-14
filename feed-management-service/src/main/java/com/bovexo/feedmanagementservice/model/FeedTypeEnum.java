@@ -1,6 +1,6 @@
 package com.bovexo.feedmanagementservice.model;
 
-public enum FeedType {
+public enum FeedTypeEnum {
     MILHO,
     SOJA,
     FARELO_SOJA,

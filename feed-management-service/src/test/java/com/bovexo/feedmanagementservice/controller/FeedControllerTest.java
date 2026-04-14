@@ -4,7 +4,7 @@ import com.bovexo.feedmanagementservice.config.RabbitMQConfig;
 import com.bovexo.feedmanagementservice.model.FeedRecord;
 import com.bovexo.feedmanagementservice.repository.FeedRecordRepository;
 import com.bovexo.feedmanagementservice.dto.FeedRecordDto;
-import com.bovexo.feedmanagementservice.model.FeedType;
+import com.bovexo.feedmanagementservice.model.FeedTypeEnum;
 import com.bovexo.feedmanagementservice.dto.FeedEventDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,13 +35,13 @@ class FeedControllerTest {
   void shouldCreateFeedAndSendEventToRabbitMQ() {
     FeedRecordDto inputDto = new FeedRecordDto();
     ReflectionTestUtils.setField(inputDto, "animalId", "VACA-001");
-    ReflectionTestUtils.setField(inputDto, "feedType", FeedType.MILHO);
+    ReflectionTestUtils.setField(inputDto, "feedType", FeedTypeEnum.MILHO);
     ReflectionTestUtils.setField(inputDto, "quantity", 10.5);
 
     FeedRecord savedRecord = new FeedRecord();
     ReflectionTestUtils.setField(savedRecord, "id", 1L);
     ReflectionTestUtils.setField(savedRecord, "animalId", "VACA-001");
-    ReflectionTestUtils.setField(savedRecord, "feedType", FeedType.MILHO);
+    ReflectionTestUtils.setField(savedRecord, "feedType", FeedTypeEnum.MILHO);
     ReflectionTestUtils.setField(savedRecord, "quantity", 10.5);
 
     when(repository.save(any(FeedRecord.class))).thenReturn(savedRecord);

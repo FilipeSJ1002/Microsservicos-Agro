@@ -2,6 +2,19 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "authenticator-service",
+			"type": "shell",
+			"command": ".\\mvnw spring-boot:run",
+			"options": {
+				"cwd": "${workspaceFolder}\\authenticator-service"
+			},
+			"presentation": {
+				"group": "bovexo-services",
+				"panel": "shared",
+				"clear": true
+			}
+		},
+		{
 			"label": "feed-cost",
 			"type": "shell",
 			"command": ".\\mvnw spring-boot:run",
@@ -10,8 +23,7 @@
 			},
 			"presentation": {
 				"group": "bovexo-services",
-				"panel": "shared",
-				"clear": true
+				"panel": "shared"
 			}
 		},
 		{
@@ -41,6 +53,7 @@
 		{
 			"label": "Iniciar Todos os Microsservicos",
 			"dependsOn": [
+				"authenticator-service",
 				"feed-cost",
 				"feed-management",
 				"nutrition-analysis"

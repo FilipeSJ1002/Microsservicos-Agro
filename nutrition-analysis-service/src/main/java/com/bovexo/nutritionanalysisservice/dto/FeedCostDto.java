@@ -1,8 +1,8 @@
 package com.bovexo.nutritionanalysisservice.dto;
-import com.bovexo.nutritionanalysisservice.model.FeedType;
+import com.bovexo.nutritionanalysisservice.model.FeedTypeEnum;
 
 public class FeedCostDto {
-  private FeedType feedType;
+  private FeedTypeEnum feedType;
   private Double costPerKg;
 
   public Double getCostPerKg() {
@@ -13,11 +13,11 @@ public class FeedCostDto {
     this.costPerKg = costPerKg;
   }
 
-  public FeedType getFeedType() {
+  public FeedTypeEnum getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(FeedType feedType) {
+  public void setFeedType(FeedTypeEnum feedType) {
     this.feedType = feedType;
   }
 }
