@@ -1,8 +1,9 @@
 package com.bovexo.feedcostservice.controller;
 
-import com.bovexo.feedcostservice.model.FeedCost;
-import com.bovexo.feedcostservice.model.FeedType;
-import com.bovexo.feedcostservice.repository.FeedCostRepository;
+import com.bovexo.feedcostservice.dto.FeedCostResponse;
+import com.bovexo.feedcostservice.model.FeedTypeEnum;
+import com.bovexo.feedcostservice.service.FeedCostService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,16 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cost")
 public class FeedCostController {
 
-  private final FeedCostRepository repository;
+  private final FeedCostService feedCostService;
 
-  public FeedCostController(FeedCostRepository repository) {
-    this.repository = repository;
+  public FeedCostController(FeedCostService feedCostService) {
+    this.feedCostService = feedCostService;
   }
 
   @GetMapping("/{feedType}")
-  public ResponseEntity<FeedCost> getCost(@PathVariable FeedType feedType) {
-    return repository.findByFeedType(feedType)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<FeedCostResponse> getCost(@PathVariable FeedTypeEnum feedType) {
+    FeedCostResponse response = feedCostService.getCostByFeedType(feedType);
+    return ResponseEntity.ok(response);
   }
 }

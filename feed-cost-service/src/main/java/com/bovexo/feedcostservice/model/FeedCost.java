@@ -16,7 +16,7 @@ public class FeedCost {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "feed_type")
-  private FeedType feedType;
+  private FeedTypeEnum feedType;
 
   @Column(name = "cost_per_kg")
   private Long costPerKg;
@@ -29,11 +29,11 @@ public class FeedCost {
     return id;
   }
 
-  public FeedType getFeedType() {
+  public FeedTypeEnum getFeedType() {
     return feedType;
   }
 
-  public void setFeedType(FeedType feedType) {
+  public void setFeedType(FeedTypeEnum feedType) {
     this.feedType = feedType;
   }
 
