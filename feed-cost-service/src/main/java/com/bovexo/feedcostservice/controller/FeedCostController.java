@@ -2,7 +2,7 @@ package com.bovexo.feedcostservice.controller;
 
 import com.bovexo.feedcostservice.dto.FeedCostResponse;
 import com.bovexo.feedcostservice.model.FeedTypeEnum;
-import com.bovexo.feedcostservice.service.FeedCostService;
+import com.bovexo.feedcostservice.service.IFeedCostService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cost")
 public class FeedCostController {
 
-  private final FeedCostService feedCostService;
+  private final IFeedCostService feedCostService;
 
-  public FeedCostController(FeedCostService feedCostService) {
+  public FeedCostController(IFeedCostService feedCostService) {
     this.feedCostService = feedCostService;
   }
 
